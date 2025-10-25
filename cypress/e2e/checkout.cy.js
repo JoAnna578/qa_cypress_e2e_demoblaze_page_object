@@ -1,8 +1,5 @@
 /// <reference types='cypress' />
-
-const HomePage = require('../pages/HomePage');
-const ProductPage = require('../pages/ProductPage');
-const CartPage = require('../pages/CartPage');
+import { HomePage, ProductPage, CartPage } from '../PageObject';
 
 describe('Demoblaze Checkout Flow', () => {
   const homePage = new HomePage();
@@ -11,16 +8,16 @@ describe('Demoblaze Checkout Flow', () => {
 
   it('should complete checkout flow', () => {
     // Home Page
-    homePage.visit();
+    homePage.visit('/');
     homePage.clickCategory('Laptops');
     homePage.clickProduct('Sony vaio i7');
 
     // Product Page
     productPage.addToCart();
-    productPage.assertAlertMessage('Product added.');
+    productPage.assertAlert('Product added.');
 
     // Cart Page
-    homePage.navigateToCart(); // teraz korzystamy z POM
+    homePage.navigateToCart();
     cartPage.assertProductInCart('Sony vaio i7');
 
     cartPage.placeOrder();
