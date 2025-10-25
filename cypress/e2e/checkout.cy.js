@@ -9,19 +9,18 @@ describe('Demoblaze Checkout Flow', () => {
   const productPage = new ProductPage();
   const cartPage = new CartPage();
 
-  before(() => {
+  it('should complete checkout flow', () => {
+    // Home Page
     homePage.visit();
-  });
-
-  it('should add Sony vaio i7 to cart and verify alert', () => {
     homePage.clickCategory('Laptops');
     homePage.clickProduct('Sony vaio i7');
+
+    // Product Page
     productPage.addToCart();
     productPage.assertAlertMessage('Product added.');
-  });
 
-  it('should place order and verify purchase', () => {
-    cy.contains('a', 'Cart').click();
+    // Cart Page
+    homePage.navigateToCart(); // teraz korzystamy z POM
     cartPage.assertProductInCart('Sony vaio i7');
 
     cartPage.placeOrder();
